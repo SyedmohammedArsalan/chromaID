@@ -1,48 +1,49 @@
 from app.models.schemas import ColorReport, PaletteSection
 
-# Temporary in-memory store (replace with DB later)
-user_store = {}
-
-
-def analyze_user(name: str) -> str:
-    # Mock logic (replace with ML later)
-    return "Dark Autumn"
-
+# 1. Create a dynamic dictionary to hold all seasonal data
+PALETTE_LIBRARY = {
+    "Dark Autumn": {
+        "undertone": "Warm-Neutral",
+        "day_best": ["Forest Green", "Saddle Brown", "Camel", "Rust", "Warm Teal", "Dark Chocolate", "Cognac", "Olive Green", "Deep Mustard", "Ivory", "Burnt Orange", "Dark Walnut"],
+        "day_avoid": ["Icy Blue", "Lavender", "Pure White", "Baby Pink", "Cool Grey", "Mint Green"],
+        "day_metals": ["Warm Gold", "Rose Gold"],
+        "night_best": ["Burgundy", "Hunter Green", "Midnight Navy", "Deep Plum", "Rust Red", "Deep Teal", "Crimson", "Espresso Black", "Bronze", "Dark Gold", "Oxblood", "Dark Tobacco"],
+        "night_avoid": ["Pastel Grey", "Light Pink", "Sage", "Peach", "Icy Periwinkle", "Silver"],
+        "night_metals": ["Yellow Gold", "Bronze", "Copper"]
+    },
+    # Add a fallback for Winter so the app doesn't crash if the ML guesses it!
+    "Winter": {
+        "undertone": "Cool-Clear",
+        "day_best": ["True Black", "Pure White", "Emerald Green", "Cobalt Blue"],
+        "day_avoid": ["Warm Brown", "Mustard Yellow", "Olive Green", "Rust"],
+        "day_metals": ["Silver", "Platinum"],
+        "night_best": ["Deep Sapphire", "Ruby Red", "Amethyst", "Charcoal"],
+        "night_avoid": ["Orange", "Golden Yellow", "Earth Tones"],
+        "night_metals": ["Silver", "White Gold"]
+    },
+    # You can add "Spring" and "Summer" here later!
+}
 
 def generate_report(season_type: str) -> ColorReport:
-    # Hardcoded based on your PDF
+    # 2. Fetch the data for the specific season. 
+    # If the season isn't in our dictionary yet, default to Dark Autumn.
+    data = PALETTE_LIBRARY.get(season_type, PALETTE_LIBRARY["Dark Autumn"])
 
     return ColorReport(
-        season_type="Dark Autumn",
-        undertone="Warm-Neutral",
+        season_type=season_type,
+        undertone=data["undertone"],
 
         day_palette=PaletteSection(
             context="Natural light",
-            best_colors=[
-                "Forest Green", "Saddle Brown", "Camel", "Rust",
-                "Warm Teal", "Dark Chocolate", "Cognac",
-                "Olive Green", "Deep Mustard", "Ivory",
-                "Burnt Orange", "Dark Walnut"
-            ],
-            avoid_colors=[
-                "Icy Blue", "Lavender", "Pure White",
-                "Baby Pink", "Cool Grey", "Mint Green"
-            ],
-            metals=["Warm Gold", "Rose Gold"]
+            best_colors=data["day_best"],
+            avoid_colors=data["day_avoid"],
+            metals=data["day_metals"]
         ),
 
         night_palette=PaletteSection(
             context="Artificial light",
-            best_colors=[
-                "Burgundy", "Hunter Green", "Midnight Navy",
-                "Deep Plum", "Rust Red", "Deep Teal",
-                "Crimson", "Espresso Black", "Bronze",
-                "Dark Gold", "Oxblood", "Dark Tobacco"
-            ],
-            avoid_colors=[
-                "Pastel Grey", "Light Pink", "Sage",
-                "Peach", "Icy Periwinkle", "Silver"
-            ],
-            metals=["Yellow Gold", "Bronze", "Copper"]
+            best_colors=data["night_best"],
+            avoid_colors=data["night_avoid"],
+            metals=data["night_metals"]
         )
     )

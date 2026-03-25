@@ -4,11 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Color Report</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
-
     <style>
         :root {
             --bg-color: #f8f9fa;
@@ -19,7 +15,6 @@
             --tag-bg: #ffffff;
             --tag-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
-
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
@@ -31,33 +26,25 @@
             justify-content: center;
             min-height: 100vh;
         }
-
         .container {
             width: 100%;
             max-width: 800px;
             background: #ffffff;
             border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
             overflow: hidden;
         }
-
-        /* Dark Premium Header */
         .report-header {
             background: var(--accent-dark);
             color: #ffffff;
             text-align: center;
             padding: 60px 30px;
-            position: relative;
         }
-
         .report-header h1 {
             font-family: 'Playfair Display', serif;
             font-size: 3rem;
-            font-weight: 500;
             margin: 0 0 15px 0;
-            letter-spacing: -0.5px;
         }
-
         .undertone-badge {
             display: inline-block;
             background: rgba(255, 255, 255, 0.1);
@@ -65,24 +52,15 @@
             padding: 8px 20px;
             border-radius: 30px;
             font-size: 0.85rem;
-            font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 2px;
-            backdrop-filter: blur(5px);
         }
-
         .content-area {
             padding: 40px 50px;
         }
-
         .section {
             margin-bottom: 50px;
         }
-
-        .section:last-child {
-            margin-bottom: 0;
-        }
-
         .section-header {
             display: flex;
             align-items: center;
@@ -90,106 +68,53 @@
             padding-bottom: 15px;
             margin-bottom: 25px;
         }
-
         .section-header h2 {
             font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
-            font-weight: 500;
-            margin: 0;
             color: var(--accent-dark);
+            margin: 0;
         }
-
         .section-header span {
             margin-right: 12px;
             font-size: 1.5rem;
         }
-
-        .palette-group {
-            margin-bottom: 30px;
-        }
-
+        .palette-group { margin-bottom: 30px; }
         .palette-group h4 {
             font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
             color: var(--text-muted);
             margin: 0 0 15px 0;
-            font-weight: 600;
         }
-
         .colors {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
         }
-
-        /* Premium Tag Styling */
         .color-box {
             padding: 10px 20px;
             border-radius: 40px;
             background: var(--tag-bg);
             border: 1px solid var(--border-light);
             font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--text-main);
             box-shadow: var(--tag-shadow);
-            transition: all 0.2s ease;
-            cursor: default;
         }
-
-        .color-box:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            border-color: #cbd5e1;
-        }
-
-        /* Avoid Tag Styling */
-        .avoid-group h4 {
-            color: #e53e3e;
-        }
-
+        .avoid-group h4 { color: #e53e3e; }
         .avoid-box {
             background: #fff5f5;
             border: 1px solid #fed7d7;
             color: #c53030;
-            box-shadow: none;
-        }
-
-        .avoid-box:hover {
-            border-color: #feb2b2;
-            box-shadow: 0 4px 12px rgba(229, 62, 62, 0.08);
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 600px) {
-            .content-area {
-                padding: 30px 20px;
-            }
-            .report-header {
-                padding: 40px 20px;
-            }
-            .report-header h1 {
-                font-size: 2.2rem;
-            }
         }
     </style>
 </head>
-
 <body>
     <div class="container">
-        
         <div class="report-header">
             <h1>{{ report.season_type }}</h1>
             <div class="undertone-badge">Undertone: {{ report.undertone }}</div>
         </div>
-
         <div class="content-area">
             <div class="section">
-                <div class="section-header">
-                    <span>🌞</span>
-                    <h2>Day Palette</h2>
-                </div>
-
+                <div class="section-header"><span>🌞</span><h2>Day Palette</h2></div>
                 <div class="palette-group">
                     <h4>Best Colors</h4>
                     <div class="colors">
@@ -198,7 +123,6 @@
                         {% endfor %}
                     </div>
                 </div>
-
                 <div class="palette-group avoid-group">
                     <h4>Colors to Avoid</h4>
                     <div class="colors">
@@ -208,13 +132,8 @@
                     </div>
                 </div>
             </div>
-
             <div class="section">
-                <div class="section-header">
-                    <span>🌙</span>
-                    <h2>Night Palette</h2>
-                </div>
-
+                <div class="section-header"><span>🌙</span><h2>Night Palette</h2></div>
                 <div class="palette-group">
                     <h4>Best Colors</h4>
                     <div class="colors">
@@ -223,7 +142,6 @@
                         {% endfor %}
                     </div>
                 </div>
-
                 <div class="palette-group avoid-group">
                     <h4>Colors to Avoid</h4>
                     <div class="colors">
@@ -234,7 +152,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </body>
 </html>
