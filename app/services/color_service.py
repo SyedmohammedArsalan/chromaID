@@ -1,6 +1,5 @@
 from app.models.schemas import ColorReport, PaletteSection
 
-# 1. Create a dynamic dictionary to hold all seasonal data
 PALETTE_LIBRARY = {
     "Dark Autumn": {
         "undertone": "Warm-Neutral",
@@ -11,35 +10,47 @@ PALETTE_LIBRARY = {
         "night_avoid": ["Pastel Grey", "Light Pink", "Sage", "Peach", "Icy Periwinkle", "Silver"],
         "night_metals": ["Yellow Gold", "Bronze", "Copper"]
     },
-    # Add a fallback for Winter so the app doesn't crash if the ML guesses it!
     "Winter": {
         "undertone": "Cool-Clear",
-        "day_best": ["True Black", "Pure White", "Emerald Green", "Cobalt Blue"],
-        "day_avoid": ["Warm Brown", "Mustard Yellow", "Olive Green", "Rust"],
+        "day_best": ["True Black", "Pure White", "Emerald Green", "Cobalt Blue", "Icy Pink", "Royal Purple"],
+        "day_avoid": ["Warm Brown", "Mustard Yellow", "Olive Green", "Rust", "Peach"],
         "day_metals": ["Silver", "Platinum"],
-        "night_best": ["Deep Sapphire", "Ruby Red", "Amethyst", "Charcoal"],
+        "night_best": ["Deep Sapphire", "Ruby Red", "Amethyst", "Charcoal", "Midnight Blue"],
         "night_avoid": ["Orange", "Golden Yellow", "Earth Tones"],
         "night_metals": ["Silver", "White Gold"]
     },
-    # You can add "Spring" and "Summer" here later!
+    "Spring": {
+        "undertone": "Warm-Clear",
+        "day_best": ["Peach", "Golden Yellow", "Coral", "Light Green", "Turquoise", "Warm Beige", "Cream"],
+        "day_avoid": ["Black", "Dark Brown", "Burgundy", "Navy", "Cool Grey"],
+        "day_metals": ["Light Gold", "Rose Gold"],
+        "night_best": ["Bright Red", "Kelly Green", "Vibrant Violet", "Warm Teal", "Goldenrod"],
+        "night_avoid": ["Charcoal", "Deep Plum", "Dusty Pink", "Silver"],
+        "night_metals": ["Bright Yellow Gold"]
+    },
+    "Summer": {
+        "undertone": "Cool-Muted",
+        "day_best": ["Soft Navy", "Dusty Blue", "Lavender", "Powder Pink", "Soft White", "Taupe"],
+        "day_avoid": ["Black", "Orange", "Mustard", "Rust", "Neon Colors"],
+        "day_metals": ["Silver", "White Gold"],
+        "night_best": ["Plum", "Raspberry", "Slate Blue", "Cool Burgundy", "Charcoal"],
+        "night_avoid": ["Warm Brown", "Bright Yellow", "Warm Green", "Bronze"],
+        "night_metals": ["Silver", "Platinum"]
+    }
 }
 
 def generate_report(season_type: str) -> ColorReport:
-    # 2. Fetch the data for the specific season. 
-    # If the season isn't in our dictionary yet, default to Dark Autumn.
     data = PALETTE_LIBRARY.get(season_type, PALETTE_LIBRARY["Dark Autumn"])
 
     return ColorReport(
         season_type=season_type,
         undertone=data["undertone"],
-
         day_palette=PaletteSection(
             context="Natural light",
             best_colors=data["day_best"],
             avoid_colors=data["day_avoid"],
             metals=data["day_metals"]
         ),
-
         night_palette=PaletteSection(
             context="Artificial light",
             best_colors=data["night_best"],
